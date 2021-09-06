@@ -1,0 +1,3 @@
+# scripts
+
+- Install docker (debian)
