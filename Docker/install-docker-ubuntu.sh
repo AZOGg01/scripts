@@ -10,7 +10,7 @@ sudo apt-get -y install apt-transport-https ca-certificates curl gnupg-agent sof
 #Ajoutez la clé GPG officielle de Docker:
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-#Ajout du référentiel (pour debian)
+#Ajout du référentiel (pour ubuntu)
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 
 #Téléchargement des packages
