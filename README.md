@@ -1,3 +1,5 @@
 # scripts
 
-- Install docker (debian)
+- Docker
+  - install-docker-debian.sh
+  - install-docker-ubuntu.sh
