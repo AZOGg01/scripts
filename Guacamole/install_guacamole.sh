@@ -27,6 +27,7 @@ apt-get -y install docker-ce docker-compose
 systemctl enable docker
 systemctl start docker
 
+# Création répertoire qui va stocker le fichier yml + cpoie du fichier yml dans ce répertoire
 mkdir /guacamole
 cp docker-compose.yml /guacamole
 cd /guacamole
@@ -34,15 +35,16 @@ cd /guacamole
 #Lancement du docker-compose.yml
 docker-compose up -d
 
+# Affichage du message de fin avec l'url de guacamole
 clear
-tput bold; tput setaf 7; echo "LISTES DES CONTAINERS EN COURS : "
+tput bold; tput setaf 7; echo "LISTE DES CONTAINERS EN COURS : "
 tput setaf 3; echo ""
 docker container ls
 echo ""
 tput setaf 7; echo "--------------------------------------------------"
 tput bold; tput setaf 7; echo "           => INSTALLATION TERMINEE <=           "
 tput setaf 7; echo ""
-tput setaf 7; echo "              Lien : $SERVER_IP:8080              "
+tput setaf 7; echo "              Lien : http://$SERVER_IP:8080              "
 tput setaf 7; echo "    Identifiant : guacadmin | MDP : guacadmin     "
 tput setaf 7; echo ""
 tput bold; tput setaf 6; echo "                   By AZOGg                      "
