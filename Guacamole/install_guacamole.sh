@@ -9,9 +9,9 @@ source /etc/os-release
 OS=$ID
 
 if [ $OS == "debian" ] || [ $OS == "kali" ] || [ $OS == "ubuntu" ]; then
-	    echo "OS supporté"
-    else
-	        echo "OS non supporté"
+	echo "OS supporté"
+else
+	echo "OS non supporté"
 fi
 
 if [ $OS == "kali" ]; then
